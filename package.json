@@ -1,7 +1,7 @@
 {
   "name": "rollup-plugin-i18n",
-  "main": "dist/rollup-starter-plugin.cjs.js",
-  "module": "dist/rollup-starter-plugin.es.js",
+  "main": "dist/rollup-plugin-i18n.cjs.js",
+  "module": "dist/rollup-plugin-i18n.es.js",
   "files": [
     "dist"
   ],
