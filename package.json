@@ -3,6 +3,7 @@
   "main": "dist/rollup-plugin-i18n.cjs.js",
   "module": "dist/rollup-plugin-i18n.es.js",
   "files": [
+    "src",
     "dist"
   ],
   "keywords": [
