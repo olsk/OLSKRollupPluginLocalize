@@ -1,0 +1,29 @@
+{
+  "name": "rollup-plugin-i18n",
+  "main": "dist/rollup-starter-plugin.cjs.js",
+  "module": "dist/rollup-starter-plugin.es.js",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "rollup",
+    "rollup-plugin"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "prebuild": "rimraf -rf dist/*",
+    "build": "rollup -c",
+    "test": "node test/test.js",
+    "pretest": "npm run build"
+  },
+  "dependencies": {
+    "OLSKInternational": "olsk/OLSKInternational",
+    "js-yaml": "latest",
+    "magic-string": "latest",
+    "rollup-pluginutils": "^2.8.1"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.3",
+    "rollup": "^1.16.2"
+  }
+}
