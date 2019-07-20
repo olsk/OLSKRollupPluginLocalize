@@ -7,7 +7,7 @@ import globPackage from 'glob';
 import pathPackage from 'path';
 import jsYAMLPackage from 'js-yaml';
 
-import { OLSKRollupI18NExtractOLSKLocalizedIdentifiers, OLSKRollupI18NReplaceInternationalizationToken } from './main.js';
+import { OLSKRollupI18NExtractOLSKLocalizedIdentifiers, OLSKRollupI18NExtractMatchingIdentifiers, OLSKRollupI18NReplaceInternationalizationToken } from './main.js';
 
 export default function i18nPlugin( options = {} ) {
   const filter = createFilter( options.include, options.exclude );
@@ -61,14 +61,8 @@ export default function i18nPlugin( options = {} ) {
 				map: sourceMap,
 			}, watchedFiles.reduce(function(coll, item) {
 				let languageID = OLSKInternational.OLSKInternationalLanguageIDForTranslationFileBasename(pathPackage.basename(item));
-				let allTranslations = jsYAMLPackage.safeLoad(require('fs').readFileSync(item, 'utf8'));
 
-				return (coll[languageID] = Object.assign(coll[languageID] || {}, matchedContstants.reduce(function (coll, item) {
-					if (!allTranslations[item]) {
-						return coll;
-					}
-					return (coll[item] = allTranslations[item]) && coll;
-				}, {}))) && coll;
+				return (coll[languageID] = Object.assign(coll[languageID] || {}, OLSKRollupI18NExtractMatchingIdentifiers(matchedContstants, jsYAMLPackage.safeLoad(require('fs').readFileSync(item, 'utf8'))))) && coll;
 			}, {}));
 					
 		},
