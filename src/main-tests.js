@@ -72,4 +72,14 @@ describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI1
 		});
 	});
 
+	it('escapes backticks', function() {
+		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
+			code: mainModule.OLSKRollupI18NInternationalizationToken,
+		}, {
+			alfa: '`bravo`',
+		}), {
+			code: "JSON.parse(`{\"alfa\":\"\\`bravo\\`\"}`)",
+		});
+	});
+
 });
