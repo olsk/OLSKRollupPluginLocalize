@@ -2,44 +2,44 @@ import { throws, deepEqual } from 'assert';
 
 import * as mainModule from './main.js';
 
-describe('OLSKRollupI18NExtractOLSKLocalizedIdentifiers', function testOLSKRollupI18NExtractOLSKLocalizedIdentifiers() {
+describe('OLSKRollupI18NExtractOLSKLocalizedConstants', function testOLSKRollupI18NExtractOLSKLocalizedConstants() {
 
 	it('returns array', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedIdentifiers(), []);
+		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants(), []);
 	});
 
 	it('matches single quotes', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedIdentifiers("window.OLSKLocalized('Alfa')"), [
+		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants("window.OLSKLocalized('Alfa')"), [
 			'Alfa'
 			]);
 	});
 
 	it('matches double quotes', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedIdentifiers('window.OLSKLocalized("Alfa")'), [
+		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants('window.OLSKLocalized("Alfa")'), [
 			'Alfa'
 			]);
 	});
 
 	it('matches backticks', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedIdentifiers('window.OLSKLocalized(`Alfa`)'), [
+		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants('window.OLSKLocalized(`Alfa`)'), [
 			'Alfa'
 			]);
 	});
 
 	it('matches partial', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedIdentifiers('window.OLSKLocalized(`Alfa${ Bravo }`)'), [
+		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants('window.OLSKLocalized(`Alfa${ Bravo }`)'), [
 			'Alfa'
 			]);
 	});
 
 	it('extracts single', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedIdentifiers("window.OLSKLocalized('Alfa')"), [
+		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants("window.OLSKLocalized('Alfa')"), [
 			'Alfa'
 			]);
 	});
 
 	it('extracts multiple', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedIdentifiers("window.OLSKLocalized('Alfa'),window.OLSKLocalized('Bravo')"), [
+		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants("window.OLSKLocalized('Alfa'),window.OLSKLocalized('Bravo')"), [
 			'Alfa',
 			'Bravo',
 			]);
