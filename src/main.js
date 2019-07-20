@@ -32,7 +32,7 @@ export const OLSKRollupI18NReplaceInternationalizationToken = function(param1, p
 
 	let magicString = new MagicString(param1.code);
 
-	magicString.overwrite(startIndex, startIndex + OLSKRollupI18NInternationalizationToken.length, `JSON.parse(\`${ JSON.stringify(param2).replace(/`/g, '\\\`') }\`)`);
+	magicString.overwrite(startIndex, startIndex + OLSKRollupI18NInternationalizationToken.length, `JSON.parse(\`${ JSON.stringify(param2).replace(/`/g, '\\\`').replace(/\\n/g, '\\\\n').replace(/\\r/g, '\\\\r') }\`)`);
 
 	return Object.assign(param1, {
 		code: magicString.toString(),

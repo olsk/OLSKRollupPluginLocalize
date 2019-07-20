@@ -60,6 +60,26 @@ describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI1
 		});
 	});
 
+	it('escapes newlines', function() {
+		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
+			code: mainModule.OLSKRollupI18NInternationalizationToken,
+		}, {
+			alfa: 'bravo\n',
+		}), {
+			code: "JSON.parse(`{\"alfa\":\"bravo\\\\n\"}`)",
+		});
+	});
+
+	it('escapes return', function() {
+		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
+			code: mainModule.OLSKRollupI18NInternationalizationToken,
+		}, {
+			alfa: 'bravo\r',
+		}), {
+			code: "JSON.parse(`{\"alfa\":\"bravo\\\\r\"}`)",
+		});
+	});
+
 	it('escapes backticks', function() {
 		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
 			code: mainModule.OLSKRollupI18NInternationalizationToken,
