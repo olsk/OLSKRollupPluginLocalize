@@ -7,13 +7,12 @@ import globPackage from 'glob';
 import pathPackage from 'path';
 import jsYAMLPackage from 'js-yaml';
 
-import { OLSKRollupI18NExtractOLSKLocalizedIdentifiers } from './main.js';
+import { OLSKRollupI18NExtractOLSKLocalizedIdentifiers, OLSKRollupI18NReplaceInternationalizationToken } from './main.js';
 
 export default function i18nPlugin( options = {} ) {
   const filter = createFilter( options.include, options.exclude );
   const sourceMap = options.sourceMap !== false;
 
-  const replaceToken = '{"PLUGIN_ALFA_SEARCH_REPLACE":"PLUGIN_ALFA_SEARCH_REPLACE"}';
   const baseDirectory = options.baseDirectory;
   let matchedContstants = [];
 
@@ -41,17 +40,14 @@ export default function i18nPlugin( options = {} ) {
 		},
 
 		renderChunk(code, chunk, options) {
-			let startIndex = code.indexOf(replaceToken);
-
-			if (startIndex === -1) return null;
-
 			if (!baseDirectory) {
 				throw new Error('missing options.baseDirectory');
 			}
 
-			let magicString = new MagicString(code);
-
-			magicString.overwrite(startIndex, startIndex + replaceToken.length, JSON.stringify(globPackage.sync('*i18n*.y*(a)ml', {
+			return OLSKRollupI18NReplaceInternationalizationToken({
+				code: code,
+				map: sourceMap,
+			}, JSON.stringify(globPackage.sync('*i18n*.y*(a)ml', {
 			  matchBase: true,
 			  cwd: baseDirectory,
 			}).filter(function(e) {
@@ -67,11 +63,6 @@ export default function i18nPlugin( options = {} ) {
 					return (coll[item] = allTranslations[item]) && coll;
 				}, {}))) && coll;
 			}, {})));
-
-			return {
-				code: magicString.toString(),
-				map: sourceMap ? magicString.generateMap() : null,
-			};
 					
 		},
   };
