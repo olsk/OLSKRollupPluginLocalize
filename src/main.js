@@ -1,5 +1,5 @@
 export const OLSKRollupI18NExtractOLSKLocalizedIdentifiers = function(inputData) {
-	let match = (inputData || '').match(/OLSKLocalized\([\'\"](\w+)[\'\"]\)/g);
+	let match = (inputData || '').match(/OLSKLocalized\(['"`](\w+)/g);
 
 	if (!match) {
 		return [];

@@ -8,6 +8,24 @@ describe('OLSKRollupI18NExtractOLSKLocalizedIdentifiers', function testOLSKRollu
 		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedIdentifiers(), []);
 	});
 
+	it('matches single quotes', function() {
+		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedIdentifiers("window.OLSKLocalized('Alfa')"), [
+			'Alfa'
+			]);
+	});
+
+	it('matches double quotes', function() {
+		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedIdentifiers('window.OLSKLocalized("Alfa")'), [
+			'Alfa'
+			]);
+	});
+
+	it('matches backticks', function() {
+		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedIdentifiers('window.OLSKLocalized(`Alfa`)'), [
+			'Alfa'
+			]);
+	});
+
 	it('extracts single', function() {
 		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedIdentifiers("window.OLSKLocalized('Alfa')"), [
 			'Alfa'
