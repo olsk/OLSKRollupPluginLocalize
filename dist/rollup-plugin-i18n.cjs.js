@@ -88,7 +88,7 @@ function i18nPlugin( options = {} ) {
 			return OLSKRollupI18NReplaceInternationalizationToken({
 				code: code,
 				map: sourceMap,
-			}, JSON.stringify(globPackage.sync('*i18n*.y*(a)ml', {
+			}, globPackage.sync('*i18n*.y*(a)ml', {
 			  matchBase: true,
 			  cwd: baseDirectory,
 			}).filter(function(e) {
@@ -103,7 +103,7 @@ function i18nPlugin( options = {} ) {
 					}
 					return (coll[item] = allTranslations[item]) && coll;
 				}, {}))) && coll;
-			}, {})));
+			}, {}));
 					
 		},
   };
