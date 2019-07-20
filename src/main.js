@@ -28,7 +28,7 @@ export const OLSKRollupI18NReplaceInternationalizationToken = function(param1, p
 
 	let startIndex = param1.code.indexOf(OLSKRollupI18NInternationalizationToken);
 
-	if (startIndex === -1) return param1;
+	if (startIndex === -1) return null;
 
 	let magicString = new MagicString(param1.code);
 

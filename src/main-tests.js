@@ -44,22 +44,10 @@ describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI1
 		}, /OLSKErrorInputInvalid/);
 	});
 
-	it('returns input', function() {
+	it('returns null if no token', function() {
 		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
 			code: 'alfa',
-		}, {}), {
-			code: 'alfa',
-		});
-	});
-
-	it('outputs map if specified', function() {
-		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
-			code: 'alfa',
-			map: 'bravo',
-		}, {}), {
-			code: 'alfa',
-			map: 'bravo',
-		});
+		}, {}), null);
 	});
 
 	it('replaces token', function() {
@@ -80,6 +68,13 @@ describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI1
 		}), {
 			code: "JSON.parse(`{\"alfa\":\"\\\`bravo\\\`\"}`)",
 		});
+	});
+
+	it('outputs map if specified', function() {
+		deepEqual(typeof mainModule.OLSKRollupI18NReplaceInternationalizationToken({
+			code: mainModule.OLSKRollupI18NInternationalizationToken,
+			map: true,
+		}, {}).map, 'object');
 	});
 
 });
