@@ -26,6 +26,12 @@ describe('OLSKRollupI18NExtractOLSKLocalizedIdentifiers', function testOLSKRollu
 			]);
 	});
 
+	it('matches partial', function() {
+		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedIdentifiers('window.OLSKLocalized(`Alfa${ Bravo }`)'), [
+			'Alfa'
+			]);
+	});
+
 	it('extracts single', function() {
 		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedIdentifiers("window.OLSKLocalized('Alfa')"), [
 			'Alfa'
