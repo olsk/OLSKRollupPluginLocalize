@@ -24,6 +24,7 @@
     "rollup-pluginutils": "^2.8.1"
   },
   "devDependencies": {
+    "OLSKTesting": "olsk/OLSKTesting",
     "rimraf": "^2.6.3",
     "rollup": "^1.16.2"
   }
