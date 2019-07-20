@@ -1,4 +1,4 @@
-export const ExtractOLSKLocalized = function(inputData) {
+export const OLSKRollupI18NExtractOLSKLocalizedIdentifiers = function(inputData) {
 	let match = (inputData || '').match(/OLSKLocalized\([\'\"](\w+)[\'\"]\)/g);
 
 	if (!match) {

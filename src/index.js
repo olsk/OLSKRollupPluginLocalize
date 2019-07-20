@@ -7,7 +7,7 @@ import globPackage from 'glob';
 import pathPackage from 'path';
 import jsYAMLPackage from 'js-yaml';
 
-import { ExtractOLSKLocalized } from './main.js';
+import { OLSKRollupI18NExtractOLSKLocalizedIdentifiers } from './main.js';
 
 export default function i18nPlugin( options = {} ) {
   const filter = createFilter( options.include, options.exclude );
@@ -29,7 +29,7 @@ export default function i18nPlugin( options = {} ) {
 				return null;
 			}
 			
-			ExtractOLSKLocalized(code).forEach(function (e) {
+			OLSKRollupI18NExtractOLSKLocalizedIdentifiers(code).forEach(function (e) {
 				if (matchedContstants.indexOf(e) !== -1) {
 					return;
 				}
