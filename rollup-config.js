@@ -1,7 +1,7 @@
 import pkg from './package.json';
 
 export default {
-  input: 'src/index.js',
+  input: 'rollup-plugin.js',
   output: [
     { file: pkg.main, format: 'cjs' },
     { file: pkg.module, format: 'es' }

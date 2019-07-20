@@ -5,7 +5,7 @@ import globPackage from 'glob';
 import pathPackage from 'path';
 import jsYAMLPackage from 'js-yaml';
 
-const OLSKRollupI18NExtractOLSKLocalizedIdentifiers = function(inputData) {
+const OLSKRollupI18NExtractOLSKLocalizedConstants = function(inputData) {
 	let match = (inputData || '').match(/OLSKLocalized\(['"`](\w+)/g);
 
 	if (!match) {
@@ -15,6 +15,24 @@ const OLSKRollupI18NExtractOLSKLocalizedIdentifiers = function(inputData) {
 	return match.map(function (e) {
 		return e.replace('OLSKLocalized', '').replace(/\W/g, '');
 	});
+};
+
+const OLSKRollupI18NExtractMatchingIdentifiers = function(param1, param2) {
+	if (!Array.isArray(param1)) {
+		throw new Error('OLSKErrorInputInvalid');
+	}
+
+	if (typeof param2 !== 'object' || param2 === null) {
+		throw new Error('OLSKErrorInputInvalid');
+	}
+
+	return Object.keys(param2).filter(function (identifier) {
+		return param1.filter(function (e) {
+			return identifier.match(new RegExp(`^${ e }`));
+		}).length;
+	}).reduce(function (coll, item) {
+		return (coll[item] = param2[item]) && coll;
+	}, {});
 };
 const OLSKRollupI18NInternationalizationToken = 'JSON.parse(`{"PLUGIN_ALFA_SEARCH_REPLACE":"PLUGIN_ALFA_SEARCH_REPLACE"}`)';
 
@@ -51,7 +69,7 @@ function i18nPlugin( options = {} ) {
   const sourceMap = options.sourceMap !== false;
 
   const baseDirectory = options.baseDirectory;
-  let matchedContstants = [];
+  let allConstants = [];
   let watchedFiles = [];
 
   return {
@@ -81,12 +99,12 @@ function i18nPlugin( options = {} ) {
 				return null;
 			}
 			
-			OLSKRollupI18NExtractOLSKLocalizedIdentifiers(code).forEach(function (e) {
-				if (matchedContstants.indexOf(e) !== -1) {
+			OLSKRollupI18NExtractOLSKLocalizedConstants(code).forEach(function (e) {
+				if (allConstants.indexOf(e) !== -1) {
 					return;
 				}
 
-				matchedContstants.push(e);
+				allConstants.push(e);
 			});
 
 			return null;
@@ -98,14 +116,8 @@ function i18nPlugin( options = {} ) {
 				map: sourceMap,
 			}, watchedFiles.reduce(function(coll, item) {
 				let languageID = OLSKInternationalLanguageIDForTranslationFileBasename(pathPackage.basename(item));
-				let allTranslations = jsYAMLPackage.safeLoad(require('fs').readFileSync(item, 'utf8'));
 
-				return (coll[languageID] = Object.assign(coll[languageID] || {}, matchedContstants.reduce(function (coll, item) {
-					if (!allTranslations[item]) {
-						return coll;
-					}
-					return (coll[item] = allTranslations[item]) && coll;
-				}, {}))) && coll;
+				return (coll[languageID] = Object.assign(coll[languageID] || {}, OLSKRollupI18NExtractMatchingIdentifiers(allConstants, jsYAMLPackage.safeLoad(require('fs').readFileSync(item, 'utf8'))))) && coll;
 			}, {}));
 					
 		},
