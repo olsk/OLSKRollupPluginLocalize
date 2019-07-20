@@ -78,7 +78,7 @@ describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI1
 		}, {
 			alfa: '`bravo`',
 		}), {
-			code: "JSON.parse(`{\"alfa\":\"\\`bravo\\`\"}`)",
+			code: "JSON.parse(`{\"alfa\":\"\\\`bravo\\\`\"}`)",
 		});
 	});
 
