@@ -47,6 +47,54 @@ describe('OLSKRollupI18NExtractOLSKLocalizedIdentifiers', function testOLSKRollu
 
 });
 
+describe('OLSKRollupI18NExtractMatchingIdentifiers', function testOLSKRollupI18NExtractMatchingIdentifiers() {
+
+	it('throws if param1 not array', function () {
+		throws(function () {
+			mainModule.OLSKRollupI18NReplaceInternationalizationToken(null, {});
+		}, /OLSKErrorInputInvalid/);
+	});
+
+	it('throws if param2 not object', function () {
+		throws(function () {
+			mainModule.OLSKRollupI18NReplaceInternationalizationToken([], null);
+		}, /OLSKErrorInputInvalid/);
+	});
+
+	it('returns object', function() {
+		deepEqual(mainModule.OLSKRollupI18NExtractMatchingIdentifiers([], {}), {});
+	});
+
+	it('excludes non-matching', function() {
+		deepEqual(mainModule.OLSKRollupI18NExtractMatchingIdentifiers(['alfa'], {
+			bravo: 'charlie',
+		}), {});
+	});
+
+	it('includes full match', function() {
+		deepEqual(mainModule.OLSKRollupI18NExtractMatchingIdentifiers(['alfa'], {
+			alfa: 'bravo',
+		}), {
+			alfa: 'bravo',
+		});
+	});
+
+	it('includes head match', function() {
+		deepEqual(mainModule.OLSKRollupI18NExtractMatchingIdentifiers(['alfa'], {
+			alfabravo: 'charlie',
+		}), {
+			alfabravo: 'charlie',
+		});
+	});
+
+	it('excludes non-head match', function() {
+		deepEqual(mainModule.OLSKRollupI18NExtractMatchingIdentifiers(['alfa'], {
+			bravoalfa: 'charlie',
+		}), {});
+	});
+
+});
+
 describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI18NReplaceInternationalizationToken() {
 	it('throws if param1 not object', function () {
 		throws(function () {

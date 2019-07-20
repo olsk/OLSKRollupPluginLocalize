@@ -10,6 +10,25 @@ export const OLSKRollupI18NExtractOLSKLocalizedIdentifiers = function(inputData)
 	});
 };
 
+export const OLSKRollupI18NExtractMatchingIdentifiers = function(param1, param2) {
+	if (!Array.isArray(param1)) {
+		throw new Error('OLSKErrorInputInvalid');
+	}
+
+	if (typeof param2 !== 'object' || param2 === null) {
+		throw new Error('OLSKErrorInputInvalid');
+	}
+
+	return Object.keys(param2).filter(function (identifier) {
+		return param1.filter(function (e) {
+			return identifier.match(new RegExp(`^${ e }`));
+		}).length;
+	}).reduce(function (coll, item) {
+		return (coll[item] = param2[item]) && coll;
+	}, {});
+};
+
+
 import MagicString from 'magic-string';
 export const OLSKRollupI18NInternationalizationToken = 'JSON.parse(`{"PLUGIN_ALFA_SEARCH_REPLACE":"PLUGIN_ALFA_SEARCH_REPLACE"}`)';
 
