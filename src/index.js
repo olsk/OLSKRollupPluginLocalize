@@ -15,9 +15,25 @@ export default function i18nPlugin( options = {} ) {
 
   const baseDirectory = options.baseDirectory;
   let matchedContstants = [];
+  let watchedFiles = [];
 
   return {
 		name: 'i18n',
+
+		buildStart() {
+      if (!baseDirectory) {
+      	throw new Error('missing options.baseDirectory');
+      }
+
+      (watchedFiles = globPackage.sync('*i18n*.y*(a)ml', {
+			  matchBase: true,
+			  cwd: baseDirectory,
+			}).filter(function(e) {
+			  return OLSKInternational.OLSKInternationalInputDataIsTranslationFileBasename(pathPackage.basename(e));
+			}).map(function (e) {
+				return pathPackage.join(baseDirectory, e);
+			})).map(this.addWatchFile)
+    },
 
 		transform(code, id) {
 			if (id.match('node_modules')) {
@@ -34,27 +50,18 @@ export default function i18nPlugin( options = {} ) {
 				}
 
 				matchedContstants.push(e);
-			})
+			});
 
 			return null;
 		},
 
 		renderChunk(code, chunk, options) {
-			if (!baseDirectory) {
-				throw new Error('missing options.baseDirectory');
-			}
-
 			return OLSKRollupI18NReplaceInternationalizationToken({
 				code: code,
 				map: sourceMap,
-			}, globPackage.sync('*i18n*.y*(a)ml', {
-			  matchBase: true,
-			  cwd: baseDirectory,
-			}).filter(function(e) {
-			  return OLSKInternational.OLSKInternationalInputDataIsTranslationFileBasename(pathPackage.basename(e));
-			}).reduce(function(coll, item) {
+			}, watchedFiles.reduce(function(coll, item) {
 				let languageID = OLSKInternational.OLSKInternationalLanguageIDForTranslationFileBasename(pathPackage.basename(item));
-				let allTranslations = jsYAMLPackage.safeLoad(require('fs').readFileSync(pathPackage.join(baseDirectory, item), 'utf8'));
+				let allTranslations = jsYAMLPackage.safeLoad(require('fs').readFileSync(item, 'utf8'));
 
 				return (coll[languageID] = Object.assign(coll[languageID] || {}, matchedContstants.reduce(function (coll, item) {
 					if (!allTranslations[item]) {
