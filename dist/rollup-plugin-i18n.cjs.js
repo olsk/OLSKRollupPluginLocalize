@@ -9,7 +9,7 @@ var globPackage = _interopDefault(require('glob'));
 var pathPackage = _interopDefault(require('path'));
 var jsYAMLPackage = _interopDefault(require('js-yaml'));
 
-const ExtractOLSKLocalized = function(inputData) {
+const OLSKRollupI18NExtractOLSKLocalizedIdentifiers = function(inputData) {
 	let match = (inputData || '').match(/OLSKLocalized\([\'\"](\w+)[\'\"]\)/g);
 
 	if (!match) {
@@ -20,12 +20,40 @@ const ExtractOLSKLocalized = function(inputData) {
 		return e.replace('OLSKLocalized', '').replace(/\W/g, '');
 	});
 };
+const OLSKRollupI18NInternationalizationToken = 'JSON.parse(`{"PLUGIN_ALFA_SEARCH_REPLACE":"PLUGIN_ALFA_SEARCH_REPLACE"}`)';
+
+const OLSKRollupI18NReplaceInternationalizationToken = function(param1, param2) {
+	if (typeof param1 !== 'object' || param1 === null) {
+		throw new Error('OLSKErrorInputInvalid');
+	}
+
+	if (typeof param1.code !== 'string') {
+		throw new Error('OLSKErrorInputInvalid');
+	}
+
+	if (typeof param2 !== 'object' || param2 === null) {
+		throw new Error('OLSKErrorInputInvalid');
+	}
+
+	let startIndex = param1.code.indexOf(OLSKRollupI18NInternationalizationToken);
+
+	if (startIndex === -1) return param1;
+
+	let magicString = new MagicString(param1.code);
+
+	magicString.overwrite(startIndex, startIndex + OLSKRollupI18NInternationalizationToken.length, `JSON.parse(\`${ JSON.stringify(param2).replace(/`/g, '\\\`') }\`)`);
+
+	return Object.assign(param1, {
+		code: magicString.toString(),
+	}, param1.map ? {
+		map: magicString.generateMap(),
+	} : {});
+};
 
 function i18nPlugin( options = {} ) {
   const filter = rollupPluginutils.createFilter( options.include, options.exclude );
   const sourceMap = options.sourceMap !== false;
 
-  const replaceToken = '{"PLUGIN_ALFA_SEARCH_REPLACE":"PLUGIN_ALFA_SEARCH_REPLACE"}';
   const baseDirectory = options.baseDirectory;
   let matchedContstants = [];
 
@@ -41,7 +69,7 @@ function i18nPlugin( options = {} ) {
 				return null;
 			}
 			
-			ExtractOLSKLocalized(code).forEach(function (e) {
+			OLSKRollupI18NExtractOLSKLocalizedIdentifiers(code).forEach(function (e) {
 				if (matchedContstants.indexOf(e) !== -1) {
 					return;
 				}
@@ -53,17 +81,14 @@ function i18nPlugin( options = {} ) {
 		},
 
 		renderChunk(code, chunk, options) {
-			let startIndex = code.indexOf(replaceToken);
-
-			if (startIndex === -1) return null;
-
 			if (!baseDirectory) {
 				throw new Error('missing options.baseDirectory');
 			}
 
-			let magicString = new MagicString(code);
-
-			magicString.overwrite(startIndex, startIndex + replaceToken.length, JSON.stringify(globPackage.sync('*i18n*.y*(a)ml', {
+			return OLSKRollupI18NReplaceInternationalizationToken({
+				code: code,
+				map: sourceMap,
+			}, JSON.stringify(globPackage.sync('*i18n*.y*(a)ml', {
 			  matchBase: true,
 			  cwd: baseDirectory,
 			}).filter(function(e) {
@@ -79,11 +104,6 @@ function i18nPlugin( options = {} ) {
 					return (coll[item] = allTranslations[item]) && coll;
 				}, {}))) && coll;
 			}, {})));
-
-			return {
-				code: magicString.toString(),
-				map: sourceMap ? magicString.generateMap() : null,
-			};
 					
 		},
   };
