@@ -55,7 +55,17 @@ const OLSKRollupI18NReplaceInternationalizationToken = function(param1, param2) 
 
 	let magicString = new MagicString(param1.code);
 
-	magicString.overwrite(startIndex, startIndex + OLSKRollupI18NInternationalizationToken.length, `JSON.parse(\`${ JSON.stringify(param2).replace(/`/g, '\\\`').replace(/\\n/g, '\\\\n').replace(/\\r/g, '\\\\r') }\`)`);
+	(function replaceToken() {
+		magicString.overwrite(startIndex, startIndex + OLSKRollupI18NInternationalizationToken.length, `JSON.parse(\`${ JSON.stringify(param2).replace(/`/g, '\\\`').replace(/\\n/g, '\\\\n').replace(/\\r/g, '\\\\r') }\`)`);
+
+		startIndex = param1.code.slice(startIndex + OLSKRollupI18NInternationalizationToken.length).indexOf(OLSKRollupI18NInternationalizationToken);
+
+		if (startIndex === -1) return;
+
+		startIndex = startIndex + OLSKRollupI18NInternationalizationToken.length;
+
+		replaceToken();
+	})();
 
 	return Object.assign(param1, {
 		code: magicString.toString(),

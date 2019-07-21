@@ -122,13 +122,23 @@ describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI1
 		}, {}), null);
 	});
 
-	it('replaces token', function() {
+	it('replaces token single', function() {
 		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
 			code: mainModule.OLSKRollupI18NInternationalizationToken,
 		}, {
 			alfa: 'bravo',
 		}), {
 			code: "JSON.parse(`{\"alfa\":\"bravo\"}`)",
+		});
+	});
+
+	it('replaces token multiple', function() {
+		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
+			code: `${ mainModule.OLSKRollupI18NInternationalizationToken }, ${ mainModule.OLSKRollupI18NInternationalizationToken }`,
+		}, {
+			alfa: 'bravo',
+		}), {
+			code: "JSON.parse(`{\"alfa\":\"bravo\"}`), JSON.parse(`{\"alfa\":\"bravo\"}`)",
 		});
 	});
 
