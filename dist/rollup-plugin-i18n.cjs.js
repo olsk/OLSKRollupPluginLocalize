@@ -38,7 +38,7 @@ const OLSKRollupI18NExtractMatchingIdentifiers = function(param1, param2) {
 		return (coll[item] = param2[item]) && coll;
 	}, {});
 };
-const OLSKRollupI18NInternationalizationToken = 'JSON.parse(`{"PLUGIN_ALFA_SEARCH_REPLACE":"PLUGIN_ALFA_SEARCH_REPLACE"}`)';
+const OLSKRollupI18NInternationalizationToken = 'JSON.parse(`{"OLSK_I18N_SEARCH_REPLACE":"OLSK_I18N_SEARCH_REPLACE"}`)';
 
 const OLSKRollupI18NReplaceInternationalizationToken = function(param1, param2) {
 	if (typeof param1 !== 'object' || param1 === null) {
