@@ -1,5 +1,5 @@
 {
-  "name": "rollup-plugin-i18n",
+  "name": "olsk-rollup-i18n",
   "main": "dist/rollup-plugin-i18n.cjs.js",
   "module": "dist/rollup-plugin-i18n.es.js",
   "files": [
