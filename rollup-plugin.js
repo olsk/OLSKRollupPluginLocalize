@@ -63,8 +63,8 @@ export default function i18nPlugin( options = {} ) {
 				let languageID = OLSKInternational.OLSKInternationalLanguageIDForTranslationFileBasename(pathPackage.basename(item));
 
 				return (coll[languageID] = Object.assign(coll[languageID] || {}, OLSKRollupI18NExtractMatchingIdentifiers(allConstants, jsYAMLPackage.safeLoad(require('fs').readFileSync(item, 'utf8'))))) && coll;
-			}, {}));
-					
+			}, {}));			
 		},
+		
   };
 }
