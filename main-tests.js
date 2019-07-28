@@ -3,9 +3,14 @@ import { throws, deepEqual } from 'assert';
 import * as mainModule from './main.js';
 
 describe('OLSKRollupI18NExtractOLSKLocalizedConstants', function testOLSKRollupI18NExtractOLSKLocalizedConstants() {
+	it('throws if not string', function () {
+		throws(function () {
+			mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants(null);
+		}, /OLSKErrorInputInvalid/);
+	});
 
 	it('returns array', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants(), []);
+		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants(''), []);
 	});
 
 	it('matches single quotes', function() {
