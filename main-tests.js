@@ -35,6 +35,12 @@ describe('OLSKRollupI18NExtractOLSKLocalizedConstants', function testOLSKRollupI
 		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants('window.OLSKLocalized(`Alfa${ Bravo }`)'), [
 			'Alfa',
 			]);
+	});
+
+	it('matches dynamic', function() {
+		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants("window.OLSKLocalized(alfa ? 'Bravo' : 'Charlie')"), [
+			'Bravo',
+			'Charlie',
 			]);
 	});
 
