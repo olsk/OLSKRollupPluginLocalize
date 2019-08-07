@@ -71,9 +71,13 @@ export const OLSKRollupI18NReplaceInternationalizationToken = function(param1, p
 		replaceToken();
 	})();
 
-	return Object.assign(param1, {
-		code: magicString.toString(),
-	}, param1.map ? {
-		map: magicString.generateMap(),
-	} : {});
+	const outputData = {
+		code: magicString.toString()
+	};
+
+	if (param1.map) {
+		outputData.map = magicString.generateMap({ hires: true });
+	}
+
+	return outputData;
 };
