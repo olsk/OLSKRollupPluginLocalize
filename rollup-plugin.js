@@ -20,6 +20,8 @@ export default function i18nPlugin( options = {} ) {
   return {
 		name: 'i18n',
 
+		_OLSKRollupI18NReplaceInternationalizationToken: OLSKRollupI18NReplaceInternationalizationToken,
+
 		buildStart() {
       if (!baseDirectory) {
       	throw new Error('missing options.baseDirectory');
