@@ -154,6 +154,16 @@ describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI1
 		});
 	});
 
+	it('replaces token multiple [3]', function() { // testing two is insufficient
+		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
+			code: `${ mainModule.OLSKRollupI18NInternationalizationToken }, ${ mainModule.OLSKRollupI18NInternationalizationToken }, ${ mainModule.OLSKRollupI18NInternationalizationToken }`,
+		}, {
+			alfa: 'bravo',
+		}), {
+			code: "JSON.parse(`{\"alfa\":\"bravo\"}`), JSON.parse(`{\"alfa\":\"bravo\"}`), JSON.parse(`{\"alfa\":\"bravo\"}`)",
+		});
+	});
+
 	it('escapes newlines', function() {
 		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
 			code: mainModule.OLSKRollupI18NInternationalizationToken,

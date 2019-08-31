@@ -59,13 +59,17 @@ export const OLSKRollupI18NReplaceInternationalizationToken = function(param1, p
 	let magicString = new MagicString(param1.code);
 
 	(function replaceToken() {
-		magicString.overwrite(startIndex, startIndex + OLSKRollupI18NInternationalizationToken.length, `JSON.parse(\`${ JSON.stringify(param2).replace(/`/g, '\\\`').replace(/\\n/g, '\\\\n').replace(/\\r/g, '\\\\r') }\`)`);
+		const endIndex = startIndex + OLSKRollupI18NInternationalizationToken.length;
 
-		startIndex = param1.code.slice(startIndex + OLSKRollupI18NInternationalizationToken.length).indexOf(OLSKRollupI18NInternationalizationToken);
+		magicString.overwrite(startIndex, endIndex, `JSON.parse(\`${ JSON.stringify(param2).replace(/`/g, '\\\`').replace(/\\n/g, '\\\\n').replace(/\\r/g, '\\\\r') }\`)`);
 
-		if (startIndex === -1) return;
+		startIndex = param1.code.slice(endIndex).indexOf(OLSKRollupI18NInternationalizationToken);
 
-		startIndex = startIndex + OLSKRollupI18NInternationalizationToken.length;
+		if (startIndex === -1) {
+			return;
+		}
+
+		startIndex += endIndex;
 
 		replaceToken();
 	})();
