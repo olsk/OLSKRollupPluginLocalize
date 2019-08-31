@@ -46,37 +46,36 @@ export default function i18nPlugin( options = {} ) {
 				return null;
 			}
 
+			// return OLSKRollupI18NReplaceInternationalizationToken({
+			// 	code: code,
+			// 	map: sourceMap || options.sourceMap || options.sourcemap,
+			// }, watchedFiles.reduce(function(coll, item) {
+			// 	let languageID = OLSKInternational.OLSKInternationalLanguageIDForTranslationFileBasename(pathPackage.basename(item));
+
+			// 	return (coll[languageID] = Object.assign(coll[languageID] || {}, jsYAMLPackage.safeLoad(require('fs').readFileSync(item, 'utf8')))) && coll;
+			// }, {}));
+			
+			OLSKRollupI18NExtractOLSKLocalizedConstants(code).forEach(function (e) {
+				if (allConstants.indexOf(e) !== -1) {
+					return;
+				}
+
+				allConstants.push(e);
+			});
+
+			return null;
+		},
+
+		renderChunk(code, chunk, options) {
 			return OLSKRollupI18NReplaceInternationalizationToken({
 				code: code,
 				map: sourceMap || options.sourceMap || options.sourcemap,
 			}, watchedFiles.reduce(function(coll, item) {
 				let languageID = OLSKInternational.OLSKInternationalLanguageIDForTranslationFileBasename(pathPackage.basename(item));
 
-				return (coll[languageID] = Object.assign(coll[languageID] || {}, jsYAMLPackage.safeLoad(require('fs').readFileSync(item, 'utf8')))) && coll;
-			}, {}));
-			
-			// OLSKRollupI18NExtractOLSKLocalizedConstants(code).forEach(function (e) {
-			// 	if (allConstants.indexOf(e) !== -1) {
-			// 		return;
-			// 	}
-
-			// 	allConstants.push(e);
-			// });
-
-			// return null;
+				return (coll[languageID] = Object.assign(coll[languageID] || {}, OLSKRollupI18NExtractMatchingIdentifiers(allConstants, jsYAMLPackage.safeLoad(require('fs').readFileSync(item, 'utf8'))))) && coll;
+			}, {}));			
 		},
-
-		// renderChunk(code, chunk, options) {
-		// 	console.log([chunk, options]);
-		// 	return OLSKRollupI18NReplaceInternationalizationToken({
-		// 		code: code,
-		// 		map: sourceMap,
-		// 	}, watchedFiles.reduce(function(coll, item) {
-		// 		let languageID = OLSKInternational.OLSKInternationalLanguageIDForTranslationFileBasename(pathPackage.basename(item));
-
-		// 		return (coll[languageID] = Object.assign(coll[languageID] || {}, OLSKRollupI18NExtractMatchingIdentifiers(allConstants, jsYAMLPackage.safeLoad(require('fs').readFileSync(item, 'utf8'))))) && coll;
-		// 	}, {}));			
-		// },
 		
   };
 }
