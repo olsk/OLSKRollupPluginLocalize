@@ -14,7 +14,8 @@
     "prebuild": "rimraf -rf __compiled/*",
     "build": "rollup -c rollup-config.js",
     "test": "node test/test.js",
-    "pretest": "npm run build"
+    "pretest": "npm run build",
+    "prepublish": "npm run build"
   },
   "dependencies": {
     "OLSKInternational": "olsk/OLSKInternational",
