@@ -6,7 +6,7 @@ export const OLSKRollupI18NExtractOLSKLocalizedConstants = function(inputData) {
 	let match = inputData.match(/OLSKLocalized\(['"`](\w+)/g);
 
 	if (!match && (match = (/OLSKLocalized\((.*)\)/g).exec(inputData))) {
-		match = match[1].match(/(['"`]\w+['"`])/g)
+		match = match[1].match(/(['"`]\w+['"`])/g);
 	}
 
 	if (!match) {
@@ -35,7 +35,6 @@ export const OLSKRollupI18NExtractMatchingIdentifiers = function(param1, param2)
 		return (coll[item] = param2[item]) && coll;
 	}, {});
 };
-
 
 import MagicString from 'magic-string';
 export const OLSKRollupI18NInternationalizationToken = 'JSON.parse(`{"OLSK_I18N_SEARCH_REPLACE":"OLSK_I18N_SEARCH_REPLACE"}`)';

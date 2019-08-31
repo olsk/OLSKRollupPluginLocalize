@@ -16,45 +16,45 @@ describe('OLSKRollupI18NExtractOLSKLocalizedConstants', function testOLSKRollupI
 	it('matches single quotes', function() {
 		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants("window.OLSKLocalized('Alfa')"), [
 			'Alfa',
-			]);
+		]);
 	});
 
 	it('matches double quotes', function() {
 		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants('window.OLSKLocalized("Alfa")'), [
 			'Alfa',
-			]);
+		]);
 	});
 
 	it('matches backticks', function() {
 		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants('window.OLSKLocalized(`Alfa`)'), [
 			'Alfa',
-			]);
+		]);
 	});
 
 	it('matches partial', function() {
 		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants('window.OLSKLocalized(`Alfa${ Bravo }`)'), [
 			'Alfa',
-			]);
+		]);
 	});
 
 	it('matches dynamic', function() {
 		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants("window.OLSKLocalized(alfa ? 'Bravo' : 'Charlie')"), [
 			'Bravo',
 			'Charlie',
-			]);
+		]);
 	});
 
 	it('extracts single', function() {
 		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants("window.OLSKLocalized('Alfa')"), [
 			'Alfa',
-			]);
+		]);
 	});
 
 	it('extracts multiple', function() {
 		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants("window.OLSKLocalized('Alfa'),window.OLSKLocalized('Bravo')"), [
 			'Alfa',
 			'Bravo',
-			]);
+		]);
 	});
 
 });
@@ -123,8 +123,8 @@ describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI1
 	it('throws if param2 not object', function () {
 		throws(function () {
 			mainModule.OLSKRollupI18NReplaceInternationalizationToken({
-			code: 'alfa',
-		}, null);
+				code: 'alfa',
+			}, null);
 		}, /OLSKErrorInputInvalid/);
 	});
 

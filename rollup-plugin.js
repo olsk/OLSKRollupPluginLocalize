@@ -10,32 +10,32 @@ import jsYAMLPackage from 'js-yaml';
 import { OLSKRollupI18NExtractOLSKLocalizedConstants, OLSKRollupI18NExtractMatchingIdentifiers, OLSKRollupI18NReplaceInternationalizationToken } from './main.js';
 
 export default function i18nPlugin( options = {} ) {
-  const filter = createFilter( options.include, options.exclude );
-  const sourceMap = options.sourceMap !== false;
+	const filter = createFilter( options.include, options.exclude );
+	const sourceMap = options.sourceMap !== false;
 
-  const baseDirectory = options.baseDirectory;
-  let allConstants = [];
-  let watchedFiles = [];
+	const baseDirectory = options.baseDirectory;
+	let allConstants = [];
+	let watchedFiles = [];
 
-  return {
+	return {
 		name: 'i18n',
 
 		_OLSKRollupI18NReplaceInternationalizationToken: OLSKRollupI18NReplaceInternationalizationToken,
 
 		buildStart() {
-      if (!baseDirectory) {
+			if (!baseDirectory) {
       	throw new Error('missing options.baseDirectory');
-      }
+			}
 
-      (watchedFiles = globPackage.sync('*i18n*.y*(a)ml', {
+			(watchedFiles = globPackage.sync('*i18n*.y*(a)ml', {
 			  matchBase: true,
 			  cwd: baseDirectory,
 			}).filter(function(e) {
 			  return OLSKInternational.OLSKInternationalInputDataIsTranslationFileBasename(pathPackage.basename(e));
 			}).map(function (e) {
 				return pathPackage.join(baseDirectory, e);
-			})).map(this.addWatchFile)
-    },
+			})).map(this.addWatchFile);
+		},
 
 		transform(code, id) {
 			if (id.match('node_modules')) {
@@ -77,5 +77,5 @@ export default function i18nPlugin( options = {} ) {
 			}, {}));			
 		},
 		
-  };
+	};
 }
