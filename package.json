@@ -1,9 +1,9 @@
 {
   "name": "olsk-rollup-i18n",
-  "main": "dist/rollup-plugin-i18n.cjs.js",
-  "module": "dist/rollup-plugin-i18n.es.js",
+  "main": "__compiled/rollup-plugin-i18n.cjs.js",
+  "module": "__compiled/rollup-plugin-i18n.es.js",
   "files": [
-    "dist"
+    "__compiled"
   ],
   "keywords": [
     "rollup",
@@ -11,7 +11,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "prebuild": "rimraf -rf dist/*",
+    "prebuild": "rimraf -rf __compiled/*",
     "build": "rollup -c rollup-config.js",
     "test": "node test/test.js",
     "pretest": "npm run build"
