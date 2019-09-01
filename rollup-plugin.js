@@ -1,6 +1,3 @@
-import { createFilter } from 'rollup-pluginutils';
-import MagicString from 'magic-string';
-
 import * as OLSKInternational from 'OLSKInternational';
 
 import globPackage from 'glob';
@@ -9,6 +6,7 @@ import jsYAMLPackage from 'js-yaml';
 
 import { OLSKRollupI18NExtractOLSKLocalizedConstants, OLSKRollupI18NExtractMatchingIdentifiers, OLSKRollupI18NReplaceInternationalizationToken } from './main.js';
 
+import { createFilter } from 'rollup-pluginutils';
 export default function i18nPlugin( options = {} ) {
 	const filter = createFilter( options.include, options.exclude );
 	const sourceMap = options.sourceMap !== false;
