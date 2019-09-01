@@ -1,8 +1,6 @@
 import * as OLSKInternational from 'OLSKInternational';
 
-import globPackage from 'glob';
 import pathPackage from 'path';
-import jsYAMLPackage from 'js-yaml';
 
 import { OLSKRollupI18NExtractOLSKLocalizedConstants, OLSKRollupI18NExtractMatchingIdentifiers, OLSKRollupI18NReplaceInternationalizationToken } from './main.js';
 
@@ -25,7 +23,7 @@ export default function i18nPlugin( options = {} ) {
       	throw new Error('missing options.baseDirectory');
 			}
 
-			(watchedFiles = globPackage.sync('*i18n*.y*(a)ml', {
+			(watchedFiles = require('glob').sync('*i18n*.y*(a)ml', {
 			  matchBase: true,
 			  cwd: baseDirectory,
 			}).filter(function(e) {
@@ -71,7 +69,7 @@ export default function i18nPlugin( options = {} ) {
 			}, watchedFiles.reduce(function(coll, item) {
 				let languageID = OLSKInternational.OLSKInternationalLanguageIDForTranslationFileBasename(pathPackage.basename(item));
 
-				return (coll[languageID] = Object.assign(coll[languageID] || {}, OLSKRollupI18NExtractMatchingIdentifiers(allConstants, jsYAMLPackage.safeLoad(require('fs').readFileSync(item, 'utf8'))))) && coll;
+				return (coll[languageID] = Object.assign(coll[languageID] || {}, OLSKRollupI18NExtractMatchingIdentifiers(allConstants, require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8'))))) && coll;
 			}, {}));			
 		},
 		
