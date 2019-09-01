@@ -18,14 +18,24 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "OLSKInternational": "olsk/OLSKInternational",
+    "rollup-pluginutils": "latest",
+
+    "// YAML PARSE": null,
     "js-yaml": "latest",
+    "OLSKInternational": "olsk/OLSKInternational",
+
+    "// SOURCE MAPS": null,
     "magic-string": "latest",
-    "rollup-pluginutils": "^2.8.1"
+    
+    "// I sacrifice myself for the commas of others": null    
   },
   "devDependencies": {
+    "rimraf": "latest",
+    "rollup": "latest",
+
+    "// TESTS": null,
     "OLSKTesting": "olsk/OLSKTesting",
-    "rimraf": "^2.6.3",
-    "rollup": "^1.16.2"
+
+    "// I sacrifice myself for the commas of others": null    
   }
 }
