@@ -1,7 +1,7 @@
 {
-  "name": "olsk-rollup-i18n",
-  "main": "__compiled/rollup-plugin-i18n.cjs.js",
-  "module": "__compiled/rollup-plugin-i18n.es.js",
+  "name": "OLSKRollupLocalize",
+  "main": "__compiled/OLSKRollupLocalize.cjs.js",
+  "module": "__compiled/OLSKRollupLocalize.es.js",
   "files": [
     "__compiled"
   ],
