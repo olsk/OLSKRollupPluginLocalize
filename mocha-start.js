@@ -1,10 +1,20 @@
-//# OLSKMochaReplaceES6Import
+(function OLSKMochaPreprocess() {
+	const fs = require('fs');
+	const replaceFunctions = [
+		require('OLSKTesting')._OLSKTestingMochaReplaceES6Import,
+	];
 
-(function OLSKMochaReplaceES6Import() {
-	require('OLSKTesting')._OLSKTestingMochaReplaceES6Import();
+	require.extensions['.js'] = function(module, filename) {
+		try {
+			return module._compile(replaceFunctions.reduce(function (coll, item) {
+				return item(coll);
+			}, fs.readFileSync(filename, 'utf-8')), filename);
+		} catch (err) {
+			// console.log(code); // eslint-disable-line no-console
+			throw err;
+		}
+	};
 })();
-
-//# OLSKMochaErrors
 
 (function OLSKMochaErrors() {
 	process.on('unhandledRejection', () => {
