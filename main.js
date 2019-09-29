@@ -1,6 +1,6 @@
 export const OLSKRollupI18NExtractOLSKLocalizedConstants = function(inputData) {
 	if (typeof inputData !== 'string') {
-		throw new Error('OLSKErrorInputInvalid');
+		throw new Error('OLSKErrorInputNotValid');
 	}
 
 	let match = inputData.match(/OLSKLocalized\(['"`](\w+)/g);
@@ -20,11 +20,11 @@ export const OLSKRollupI18NExtractOLSKLocalizedConstants = function(inputData) {
 
 export const OLSKRollupI18NExtractMatchingIdentifiers = function(param1, param2) {
 	if (!Array.isArray(param1)) {
-		throw new Error('OLSKErrorInputInvalid');
+		throw new Error('OLSKErrorInputNotValid');
 	}
 
 	if (typeof param2 !== 'object' || param2 === null) {
-		throw new Error('OLSKErrorInputInvalid');
+		throw new Error('OLSKErrorInputNotValid');
 	}
 
 	return Object.keys(param2).filter(function (identifier) {
@@ -41,15 +41,15 @@ export const OLSKRollupI18NInternationalizationToken = 'JSON.parse(`{"OLSK_I18N_
 
 export const OLSKRollupI18NReplaceInternationalizationToken = function(param1, param2) {
 	if (typeof param1 !== 'object' || param1 === null) {
-		throw new Error('OLSKErrorInputInvalid');
+		throw new Error('OLSKErrorInputNotValid');
 	}
 
 	if (typeof param1.code !== 'string') {
-		throw new Error('OLSKErrorInputInvalid');
+		throw new Error('OLSKErrorInputNotValid');
 	}
 
 	if (typeof param2 !== 'object' || param2 === null) {
-		throw new Error('OLSKErrorInputInvalid');
+		throw new Error('OLSKErrorInputNotValid');
 	}
 
 	let startIndex = param1.code.indexOf(OLSKRollupI18NInternationalizationToken);

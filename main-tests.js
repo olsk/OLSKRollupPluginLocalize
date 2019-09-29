@@ -6,7 +6,7 @@ describe('OLSKRollupI18NExtractOLSKLocalizedConstants', function testOLSKRollupI
 	it('throws if not string', function () {
 		throws(function () {
 			mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants(null);
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns array', function() {
@@ -64,13 +64,13 @@ describe('OLSKRollupI18NExtractMatchingIdentifiers', function testOLSKRollupI18N
 	it('throws if param1 not array', function () {
 		throws(function () {
 			mainModule.OLSKRollupI18NReplaceInternationalizationToken(null, {});
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param2 not object', function () {
 		throws(function () {
 			mainModule.OLSKRollupI18NReplaceInternationalizationToken([], null);
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns object', function() {
@@ -111,13 +111,13 @@ describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI1
 	it('throws if param1 not object', function () {
 		throws(function () {
 			mainModule.OLSKRollupI18NReplaceInternationalizationToken(null, {});
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param1 without object.code', function () {
 		throws(function () {
 			mainModule.OLSKRollupI18NReplaceInternationalizationToken({}, {});
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param2 not object', function () {
@@ -125,7 +125,7 @@ describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI1
 			mainModule.OLSKRollupI18NReplaceInternationalizationToken({
 				code: 'alfa',
 			}, null);
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns null if no token', function() {
