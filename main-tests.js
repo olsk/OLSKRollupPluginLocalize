@@ -1,6 +1,6 @@
-import { throws, deepEqual } from 'assert';
+const { throws, deepEqual } = require('assert');
 
-import * as mainModule from './main.js';
+const mainModule = require('./main.js');
 
 describe('OLSKRollupI18NExtractOLSKLocalizedConstants', function testOLSKRollupI18NExtractOLSKLocalizedConstants() {
 	it('throws if not string', function () {
