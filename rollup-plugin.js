@@ -1,12 +1,9 @@
-import * as OLSKInternational from 'OLSKInternational';
+const pathPackage = require('path');
 
-import pathPackage from 'path';
+const { OLSKRollupLocalizeExtractOLSKLocalizedConstants, OLSKRollupLocalizeExtractMatchingIdentifiers, OLSKRollupLocalizeReplaceInternationalizationToken } = require('./main.js');
 
-import { OLSKRollupI18NExtractOLSKLocalizedConstants, OLSKRollupI18NExtractMatchingIdentifiers, OLSKRollupI18NReplaceInternationalizationToken } from './main.js';
-
-import { createFilter } from 'rollup-pluginutils';
-export default function i18nPlugin( options = {} ) {
-	const filter = createFilter( options.include, options.exclude );
+module.exports = function i18nPlugin( options = {} ) {
+	const filter = require('rollup-pluginutils').createFilter( options.include, options.exclude );
 	const sourceMap = options.sourceMap !== false;
 
 	const baseDirectory = options.baseDirectory;
@@ -16,7 +13,7 @@ export default function i18nPlugin( options = {} ) {
 	return {
 		name: 'i18n',
 
-		_OLSKRollupI18NReplaceInternationalizationToken: OLSKRollupI18NReplaceInternationalizationToken,
+		_OLSKRollupLocalizeReplaceInternationalizationToken: OLSKRollupLocalizeReplaceInternationalizationToken,
 
 		buildStart() {
 			if (!baseDirectory) {
@@ -27,7 +24,7 @@ export default function i18nPlugin( options = {} ) {
 			  matchBase: true,
 			  cwd: baseDirectory,
 			}).filter(function(e) {
-			  return OLSKInternational.OLSKInternationalIsTranslationFileBasename(pathPackage.basename(e));
+			  return require('OLSKInternational').OLSKInternationalIsTranslationFileBasename(pathPackage.basename(e));
 			}).map(function (e) {
 				return pathPackage.join(baseDirectory, e);
 			})).map(this.addWatchFile);
@@ -42,16 +39,16 @@ export default function i18nPlugin( options = {} ) {
 				return null;
 			}
 
-			// return OLSKRollupI18NReplaceInternationalizationToken({
+			// return OLSKRollupLocalizeReplaceInternationalizationToken({
 			// 	code: code,
 			// 	map: sourceMap || options.sourceMap || options.sourcemap,
 			// }, watchedFiles.reduce(function(coll, item) {
-			// 	let languageID = OLSKInternational.OLSKInternationalLanguageID(pathPackage.basename(item));
+			// 	let languageID = require('OLSKInternational').OLSKInternationalLanguageID(pathPackage.basename(item));
 
 			// 	return (coll[languageID] = Object.assign(coll[languageID] || {}, jsYAMLPackage.safeLoad(require('fs').readFileSync(item, 'utf8')))) && coll;
 			// }, {}));
 			
-			OLSKRollupI18NExtractOLSKLocalizedConstants(code).forEach(function (e) {
+			OLSKRollupLocalizeExtractOLSKLocalizedConstants(code).forEach(function (e) {
 				if (allConstants.indexOf(e) !== -1) {
 					return;
 				}
@@ -63,13 +60,13 @@ export default function i18nPlugin( options = {} ) {
 		},
 
 		renderChunk(code, chunk, options) {
-			return OLSKRollupI18NReplaceInternationalizationToken({
+			return OLSKRollupLocalizeReplaceInternationalizationToken({
 				code: code,
 				map: sourceMap || options.sourceMap || options.sourcemap,
 			}, watchedFiles.reduce(function(coll, item) {
-				let languageID = OLSKInternational.OLSKInternationalLanguageID(pathPackage.basename(item));
+				let languageID = require('OLSKInternational').OLSKInternationalLanguageID(pathPackage.basename(item));
 
-				return (coll[languageID] = Object.assign(coll[languageID] || {}, OLSKRollupI18NExtractMatchingIdentifiers(allConstants, require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8'))))) && coll;
+				return (coll[languageID] = Object.assign(coll[languageID] || {}, OLSKRollupLocalizeExtractMatchingIdentifiers(allConstants, require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8'))))) && coll;
 			}, {}));			
 		},
 		

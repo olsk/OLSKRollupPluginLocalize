@@ -1,8 +1,8 @@
-const OLSKRollupI18NInternationalizationToken = 'JSON.parse(`{"OLSK_I18N_SEARCH_REPLACE":"OLSK_I18N_SEARCH_REPLACE"}`)';
+const OLSKRollupLocalizeInternationalizationToken = 'JSON.parse(`{"OLSK_I18N_SEARCH_REPLACE":"OLSK_I18N_SEARCH_REPLACE"}`)';
 
 const mod = {
 
-	OLSKRollupI18NExtractOLSKLocalizedConstants (inputData) {
+	OLSKRollupLocalizeExtractOLSKLocalizedConstants (inputData) {
 		if (typeof inputData !== 'string') {
 			throw new Error('OLSKErrorInputNotValid');
 		}
@@ -22,7 +22,7 @@ const mod = {
 		});
 	},
 
-	OLSKRollupI18NExtractMatchingIdentifiers (param1, param2) {
+	OLSKRollupLocalizeExtractMatchingIdentifiers (param1, param2) {
 		if (!Array.isArray(param1)) {
 			throw new Error('OLSKErrorInputNotValid');
 		}
@@ -40,9 +40,9 @@ const mod = {
 		}, {});
 	},
 
-	OLSKRollupI18NInternationalizationToken,
+	OLSKRollupLocalizeInternationalizationToken,
 
-	OLSKRollupI18NReplaceInternationalizationToken (param1, param2) {
+	OLSKRollupLocalizeReplaceInternationalizationToken (param1, param2) {
 		if (typeof param1 !== 'object' || param1 === null) {
 			throw new Error('OLSKErrorInputNotValid');
 		}
@@ -55,18 +55,18 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		let startIndex = param1.code.indexOf(OLSKRollupI18NInternationalizationToken);
+		let startIndex = param1.code.indexOf(OLSKRollupLocalizeInternationalizationToken);
 
 		if (startIndex === -1) return null;
 
 		let magicString = new (require('magic-string'))(param1.code);
 
 		(function replaceToken() {
-			const endIndex = startIndex + OLSKRollupI18NInternationalizationToken.length;
+			const endIndex = startIndex + OLSKRollupLocalizeInternationalizationToken.length;
 
 			magicString.overwrite(startIndex, endIndex, `JSON.parse(\`${ JSON.stringify(param2).replace(/`/g, '\\\`').replace(/\\n/g, '\\\\n').replace(/\\r/g, '\\\\r') }\`)`);
 
-			startIndex = param1.code.slice(endIndex).indexOf(OLSKRollupI18NInternationalizationToken);
+			startIndex = param1.code.slice(endIndex).indexOf(OLSKRollupLocalizeInternationalizationToken);
 
 			if (startIndex === -1) {
 				return;

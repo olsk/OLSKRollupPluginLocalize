@@ -1,22 +1,9 @@
 {
-  "name": "olsk-rollup-plugin-localize",
-  "main": "__compiled/olsk-rollup-plugin-localize.cjs.js",
-  "module": "__compiled/olsk-rollup-plugin-localize.es.js",
-  "files": [
-    "__compiled"
-  ],
+  "main": "rollup-plugin.js",
   "keywords": [
     "rollup",
     "rollup-plugin"
   ],
-  "license": "MIT",
-  "scripts": {
-    "prebuild": "rimraf -rf __compiled/*",
-    "build": "rollup -c rollup-config.js",
-    "test": "node test/test.js",
-    "pretest": "npm run build",
-    "prepublish": "npm run build"
-  },
   "dependencies": {
     "rollup-pluginutils": "latest",
 
@@ -27,15 +14,6 @@
     "// SOURCE MAPS": null,
     "magic-string": "latest",
     
-    "// I sacrifice myself for the commas of others": null    
-  },
-  "devDependencies": {
-    "rimraf": "latest",
-    "rollup": "latest",
-
-    "// TESTS": null,
-    "OLSKTesting": "olsk/OLSKTesting",
-
     "// I sacrifice myself for the commas of others": null    
   }
 }

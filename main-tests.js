@@ -2,56 +2,56 @@ const { throws, deepEqual } = require('assert');
 
 const mainModule = require('./main.js');
 
-describe('OLSKRollupI18NExtractOLSKLocalizedConstants', function testOLSKRollupI18NExtractOLSKLocalizedConstants() {
+describe('OLSKRollupLocalizeExtractOLSKLocalizedConstants', function testOLSKRollupLocalizeExtractOLSKLocalizedConstants() {
 	it('throws if not string', function () {
 		throws(function () {
-			mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants(null);
+			mainModule.OLSKRollupLocalizeExtractOLSKLocalizedConstants(null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns array', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants(''), []);
+		deepEqual(mainModule.OLSKRollupLocalizeExtractOLSKLocalizedConstants(''), []);
 	});
 
 	it('matches single quotes', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants("window.OLSKLocalized('Alfa')"), [
+		deepEqual(mainModule.OLSKRollupLocalizeExtractOLSKLocalizedConstants("window.OLSKLocalized('Alfa')"), [
 			'Alfa',
 		]);
 	});
 
 	it('matches double quotes', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants('window.OLSKLocalized("Alfa")'), [
+		deepEqual(mainModule.OLSKRollupLocalizeExtractOLSKLocalizedConstants('window.OLSKLocalized("Alfa")'), [
 			'Alfa',
 		]);
 	});
 
 	it('matches backticks', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants('window.OLSKLocalized(`Alfa`)'), [
+		deepEqual(mainModule.OLSKRollupLocalizeExtractOLSKLocalizedConstants('window.OLSKLocalized(`Alfa`)'), [
 			'Alfa',
 		]);
 	});
 
 	it('matches partial', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants('window.OLSKLocalized(`Alfa${ Bravo }`)'), [
+		deepEqual(mainModule.OLSKRollupLocalizeExtractOLSKLocalizedConstants('window.OLSKLocalized(`Alfa${ Bravo }`)'), [
 			'Alfa',
 		]);
 	});
 
 	it('matches dynamic', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants("window.OLSKLocalized(alfa ? 'Bravo' : 'Charlie')"), [
+		deepEqual(mainModule.OLSKRollupLocalizeExtractOLSKLocalizedConstants("window.OLSKLocalized(alfa ? 'Bravo' : 'Charlie')"), [
 			'Bravo',
 			'Charlie',
 		]);
 	});
 
 	it('extracts single', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants("window.OLSKLocalized('Alfa')"), [
+		deepEqual(mainModule.OLSKRollupLocalizeExtractOLSKLocalizedConstants("window.OLSKLocalized('Alfa')"), [
 			'Alfa',
 		]);
 	});
 
 	it('extracts multiple', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractOLSKLocalizedConstants("window.OLSKLocalized('Alfa'),window.OLSKLocalized('Bravo')"), [
+		deepEqual(mainModule.OLSKRollupLocalizeExtractOLSKLocalizedConstants("window.OLSKLocalized('Alfa'),window.OLSKLocalized('Bravo')"), [
 			'Alfa',
 			'Bravo',
 		]);
@@ -59,32 +59,32 @@ describe('OLSKRollupI18NExtractOLSKLocalizedConstants', function testOLSKRollupI
 
 });
 
-describe('OLSKRollupI18NExtractMatchingIdentifiers', function testOLSKRollupI18NExtractMatchingIdentifiers() {
+describe('OLSKRollupLocalizeExtractMatchingIdentifiers', function testOLSKRollupLocalizeExtractMatchingIdentifiers() {
 
 	it('throws if param1 not array', function () {
 		throws(function () {
-			mainModule.OLSKRollupI18NReplaceInternationalizationToken(null, {});
+			mainModule.OLSKRollupLocalizeReplaceInternationalizationToken(null, {});
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param2 not object', function () {
 		throws(function () {
-			mainModule.OLSKRollupI18NReplaceInternationalizationToken([], null);
+			mainModule.OLSKRollupLocalizeReplaceInternationalizationToken([], null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns object', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractMatchingIdentifiers([], {}), {});
+		deepEqual(mainModule.OLSKRollupLocalizeExtractMatchingIdentifiers([], {}), {});
 	});
 
 	it('excludes non-matching', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractMatchingIdentifiers(['alfa'], {
+		deepEqual(mainModule.OLSKRollupLocalizeExtractMatchingIdentifiers(['alfa'], {
 			bravo: 'charlie',
 		}), {});
 	});
 
 	it('includes full match', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractMatchingIdentifiers(['alfa'], {
+		deepEqual(mainModule.OLSKRollupLocalizeExtractMatchingIdentifiers(['alfa'], {
 			alfa: 'bravo',
 		}), {
 			alfa: 'bravo',
@@ -92,7 +92,7 @@ describe('OLSKRollupI18NExtractMatchingIdentifiers', function testOLSKRollupI18N
 	});
 
 	it('includes head match', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractMatchingIdentifiers(['alfa'], {
+		deepEqual(mainModule.OLSKRollupLocalizeExtractMatchingIdentifiers(['alfa'], {
 			alfabravo: 'charlie',
 		}), {
 			alfabravo: 'charlie',
@@ -100,43 +100,43 @@ describe('OLSKRollupI18NExtractMatchingIdentifiers', function testOLSKRollupI18N
 	});
 
 	it('excludes non-head match', function() {
-		deepEqual(mainModule.OLSKRollupI18NExtractMatchingIdentifiers(['alfa'], {
+		deepEqual(mainModule.OLSKRollupLocalizeExtractMatchingIdentifiers(['alfa'], {
 			bravoalfa: 'charlie',
 		}), {});
 	});
 
 });
 
-describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI18NReplaceInternationalizationToken() {
+describe('OLSKRollupLocalizeReplaceInternationalizationToken', function OLSKRollupLocalizeReplaceInternationalizationToken() {
 	it('throws if param1 not object', function () {
 		throws(function () {
-			mainModule.OLSKRollupI18NReplaceInternationalizationToken(null, {});
+			mainModule.OLSKRollupLocalizeReplaceInternationalizationToken(null, {});
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param1 without object.code', function () {
 		throws(function () {
-			mainModule.OLSKRollupI18NReplaceInternationalizationToken({}, {});
+			mainModule.OLSKRollupLocalizeReplaceInternationalizationToken({}, {});
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param2 not object', function () {
 		throws(function () {
-			mainModule.OLSKRollupI18NReplaceInternationalizationToken({
+			mainModule.OLSKRollupLocalizeReplaceInternationalizationToken({
 				code: 'alfa',
 			}, null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns null if no token', function() {
-		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
+		deepEqual(mainModule.OLSKRollupLocalizeReplaceInternationalizationToken({
 			code: 'alfa',
 		}, {}), null);
 	});
 
 	it('replaces token single', function() {
-		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
-			code: mainModule.OLSKRollupI18NInternationalizationToken,
+		deepEqual(mainModule.OLSKRollupLocalizeReplaceInternationalizationToken({
+			code: mainModule.OLSKRollupLocalizeInternationalizationToken,
 		}, {
 			alfa: 'bravo',
 		}), {
@@ -145,8 +145,8 @@ describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI1
 	});
 
 	it('replaces token multiple', function() {
-		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
-			code: `${ mainModule.OLSKRollupI18NInternationalizationToken }, ${ mainModule.OLSKRollupI18NInternationalizationToken }`,
+		deepEqual(mainModule.OLSKRollupLocalizeReplaceInternationalizationToken({
+			code: `${ mainModule.OLSKRollupLocalizeInternationalizationToken }, ${ mainModule.OLSKRollupLocalizeInternationalizationToken }`,
 		}, {
 			alfa: 'bravo',
 		}), {
@@ -155,8 +155,8 @@ describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI1
 	});
 
 	it('replaces token multiple [3]', function() { // testing two is insufficient
-		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
-			code: `${ mainModule.OLSKRollupI18NInternationalizationToken }, ${ mainModule.OLSKRollupI18NInternationalizationToken }, ${ mainModule.OLSKRollupI18NInternationalizationToken }`,
+		deepEqual(mainModule.OLSKRollupLocalizeReplaceInternationalizationToken({
+			code: `${ mainModule.OLSKRollupLocalizeInternationalizationToken }, ${ mainModule.OLSKRollupLocalizeInternationalizationToken }, ${ mainModule.OLSKRollupLocalizeInternationalizationToken }`,
 		}, {
 			alfa: 'bravo',
 		}), {
@@ -165,8 +165,8 @@ describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI1
 	});
 
 	it('escapes newlines', function() {
-		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
-			code: mainModule.OLSKRollupI18NInternationalizationToken,
+		deepEqual(mainModule.OLSKRollupLocalizeReplaceInternationalizationToken({
+			code: mainModule.OLSKRollupLocalizeInternationalizationToken,
 		}, {
 			alfa: 'bravo\n',
 		}), {
@@ -175,8 +175,8 @@ describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI1
 	});
 
 	it('escapes return', function() {
-		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
-			code: mainModule.OLSKRollupI18NInternationalizationToken,
+		deepEqual(mainModule.OLSKRollupLocalizeReplaceInternationalizationToken({
+			code: mainModule.OLSKRollupLocalizeInternationalizationToken,
 		}, {
 			alfa: 'bravo\r',
 		}), {
@@ -185,8 +185,8 @@ describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI1
 	});
 
 	it('escapes backticks', function() {
-		deepEqual(mainModule.OLSKRollupI18NReplaceInternationalizationToken({
-			code: mainModule.OLSKRollupI18NInternationalizationToken,
+		deepEqual(mainModule.OLSKRollupLocalizeReplaceInternationalizationToken({
+			code: mainModule.OLSKRollupLocalizeInternationalizationToken,
 		}, {
 			alfa: '`bravo`',
 		}), {
@@ -195,8 +195,8 @@ describe('OLSKRollupI18NReplaceInternationalizationToken', function OLSKRollupI1
 	});
 
 	it('outputs map if specified', function() {
-		deepEqual(typeof mainModule.OLSKRollupI18NReplaceInternationalizationToken({
-			code: mainModule.OLSKRollupI18NInternationalizationToken,
+		deepEqual(typeof mainModule.OLSKRollupLocalizeReplaceInternationalizationToken({
+			code: mainModule.OLSKRollupLocalizeInternationalizationToken,
 			map: true,
 		}, {}).map, 'object');
 	});
