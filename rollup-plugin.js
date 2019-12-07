@@ -31,9 +31,9 @@ module.exports = function i18nPlugin( options = {} ) {
 		},
 
 		transform(code, id) {
-			if (id.match('node_modules')) {
-				return null;
-			}
+			// if (id.match('node_modules')) {
+			// 	return null;
+			// }
 
 			if (!filter(id)) {
 				return null;
