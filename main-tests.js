@@ -2,7 +2,7 @@ const { throws, deepEqual } = require('assert');
 
 const mainModule = require('./main.js');
 
-describe('OLSKRollupLocalizeExtractOLSKLocalizedConstants', function testOLSKRollupLocalizeExtractOLSKLocalizedConstants() {
+describe('OLSKRollupLocalizeExtractOLSKLocalizedConstants', function test_OLSKRollupLocalizeExtractOLSKLocalizedConstants() {
 	it('throws if not string', function () {
 		throws(function () {
 			mainModule.OLSKRollupLocalizeExtractOLSKLocalizedConstants(null);
@@ -59,7 +59,7 @@ describe('OLSKRollupLocalizeExtractOLSKLocalizedConstants', function testOLSKRol
 
 });
 
-describe('OLSKRollupLocalizeExtractMatchingIdentifiers', function testOLSKRollupLocalizeExtractMatchingIdentifiers() {
+describe('OLSKRollupLocalizeExtractMatchingIdentifiers', function test_OLSKRollupLocalizeExtractMatchingIdentifiers() {
 
 	it('throws if param1 not array', function () {
 		throws(function () {
