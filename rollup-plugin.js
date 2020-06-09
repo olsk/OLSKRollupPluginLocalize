@@ -49,7 +49,7 @@ module.exports = function i18nPlugin( options = {} ) {
 			// }, {}));
 			
 			OLSKRollupLocalizeExtractOLSKLocalizedConstants(code).forEach(function (e) {
-				if (allConstants.indexOf(e) !== -1) {
+				if (allConstants.includes(e)) {
 					return;
 				}
 
