@@ -4,4 +4,4 @@ package-lock.json
 
 # BUILD
 **/__*/*
-__static
+.static
