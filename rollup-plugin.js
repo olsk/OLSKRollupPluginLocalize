@@ -93,8 +93,11 @@ module.exports = function i18nPlugin( options = {} ) {
 				map: mod._DataHasSourceMap || options.sourceMap || options.sourcemap,
 			}, mod._ValueWatchedFiles.reduce(function(coll, item) {
 				const languageID = require('OLSKInternational').OLSKInternationalLanguageID(require('path').basename(item));
+				const data = require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8'));
 
-				return (coll[languageID] = Object.assign(coll[languageID] || {}, OLSKRollupLocalize.OLSKRollupLocalizeExtractMatchingIdentifiers(mod._ValueConstants, require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8'))))) && coll;
+				return Object.assign(coll, {
+					[languageID]: Object.assign(coll[languageID] || {}, OLSKRollupLocalize.OLSKRollupLocalizeExtractMatchingIdentifiers(mod._ValueConstants, data)),
+				});
 			}, {}));			
 		},
 		
