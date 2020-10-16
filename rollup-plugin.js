@@ -1,7 +1,33 @@
 const OLSKRollupLocalize = require('./main.js');
 
 module.exports = function i18nPlugin( options = {} ) {
-	const filter = require('rollup-pluginutils').createFilter( options.include, options.exclude );
+
+	const mod = {
+
+		// DATA
+
+		_DataFilter: require('rollup-pluginutils').createFilter( options.include, options.exclude ),
+
+		// SETUP
+
+		SetupEverything() {
+			mod.SetupAlfa();
+		},
+
+		SetupAlfa() {
+			
+		},
+
+		// LIFECYCLE
+
+		LifecycleModuleDidLoad() {
+			mod.SetupEverything();
+		},
+
+	};
+
+	mod.LifecycleModuleDidLoad();
+
 	const sourceMap = options.sourceMap !== false;
 
 	let allConstants = [];
@@ -32,7 +58,7 @@ module.exports = function i18nPlugin( options = {} ) {
 			// 	return null;
 			// }
 
-			if (!filter(id)) {
+			if (!mod._DataFilter(id)) {
 				return null;
 			}
 
