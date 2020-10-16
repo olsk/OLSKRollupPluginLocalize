@@ -4,6 +4,10 @@ module.exports = function i18nPlugin( options = {} ) {
 
 	const mod = {
 
+		// VALUE
+
+		_ValueConstants: [],
+
 		// DATA
 
 		_DataFilter: require('rollup-pluginutils').createFilter( options.include, options.exclude ),
@@ -29,7 +33,6 @@ module.exports = function i18nPlugin( options = {} ) {
 
 	mod.LifecycleModuleDidLoad();
 
-	let allConstants = [];
 	let watchedFiles = [];
 
 	return {
@@ -71,11 +74,11 @@ module.exports = function i18nPlugin( options = {} ) {
 			// }, {}));
 			
 			OLSKRollupLocalize.OLSKRollupLocalizeExtractOLSKLocalizedConstants(code).forEach(function (e) {
-				if (allConstants.includes(e)) {
+				if (mod._ValueConstants.includes(e)) {
 					return;
 				}
 
-				allConstants.push(e);
+				mod._ValueConstants.push(e);
 			});
 
 			return null;
@@ -88,7 +91,7 @@ module.exports = function i18nPlugin( options = {} ) {
 			}, watchedFiles.reduce(function(coll, item) {
 				let languageID = require('OLSKInternational').OLSKInternationalLanguageID(require('path').basename(item));
 
-				return (coll[languageID] = Object.assign(coll[languageID] || {}, OLSKRollupLocalize.OLSKRollupLocalizeExtractMatchingIdentifiers(allConstants, require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8'))))) && coll;
+				return (coll[languageID] = Object.assign(coll[languageID] || {}, OLSKRollupLocalize.OLSKRollupLocalizeExtractMatchingIdentifiers(mod._ValueConstants, require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8'))))) && coll;
 			}, {}));			
 		},
 		
