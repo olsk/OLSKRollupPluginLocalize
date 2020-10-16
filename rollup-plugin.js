@@ -4,7 +4,6 @@ module.exports = function i18nPlugin( options = {} ) {
 	const filter = require('rollup-pluginutils').createFilter( options.include, options.exclude );
 	const sourceMap = options.sourceMap !== false;
 
-	const baseDirectory = options.baseDirectory;
 	let allConstants = [];
 	let watchedFiles = [];
 
@@ -14,17 +13,17 @@ module.exports = function i18nPlugin( options = {} ) {
 		_OLSKRollupLocalizeReplaceInternationalizationToken: OLSKRollupLocalize.OLSKRollupLocalizeReplaceInternationalizationToken,
 
 		buildStart() {
-			if (!baseDirectory) {
+			if (!options.baseDirectory) {
       	throw new Error('missing options.baseDirectory');
 			}
 
 			(watchedFiles = require('glob').sync('*i18n*.y*(a)ml', {
 			  matchBase: true,
-			  cwd: baseDirectory,
+			  cwd: options.baseDirectory,
 			}).filter(function(e) {
 			  return require('OLSKInternational').OLSKInternationalIsTranslationFileBasename(require('path').basename(e));
 			}).map(function (e) {
-				return require('path').join(baseDirectory, e);
+				return require('path').join(options.baseDirectory, e);
 			})).map(this.addWatchFile);
 		},
 
