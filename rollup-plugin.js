@@ -7,6 +7,7 @@ module.exports = function i18nPlugin( options = {} ) {
 		// DATA
 
 		_DataFilter: require('rollup-pluginutils').createFilter( options.include, options.exclude ),
+		_DataHasSourceMap: options.sourceMap !== false, // #purge
 
 		// SETUP
 
@@ -27,8 +28,6 @@ module.exports = function i18nPlugin( options = {} ) {
 	};
 
 	mod.LifecycleModuleDidLoad();
-
-	const sourceMap = options.sourceMap !== false;
 
 	let allConstants = [];
 	let watchedFiles = [];
@@ -64,7 +63,7 @@ module.exports = function i18nPlugin( options = {} ) {
 
 			// return OLSKRollupLocalize.OLSKRollupLocalizeReplaceInternationalizationToken({
 			// 	code: code,
-			// 	map: sourceMap || options.sourceMap || options.sourcemap,
+			// 	map: mod._DataHasSourceMap || options.sourceMap || options.sourcemap,
 			// }, watchedFiles.reduce(function(coll, item) {
 			// 	let languageID = require('OLSKInternational').OLSKInternationalLanguageID(require('path').basename(item));
 
@@ -85,7 +84,7 @@ module.exports = function i18nPlugin( options = {} ) {
 		renderChunk(code, chunk, options) {
 			return OLSKRollupLocalize.OLSKRollupLocalizeReplaceInternationalizationToken({
 				code: code,
-				map: sourceMap || options.sourceMap || options.sourcemap,
+				map: mod._DataHasSourceMap || options.sourceMap || options.sourcemap,
 			}, watchedFiles.reduce(function(coll, item) {
 				let languageID = require('OLSKInternational').OLSKInternationalLanguageID(require('path').basename(item));
 
