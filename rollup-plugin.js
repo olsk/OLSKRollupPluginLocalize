@@ -1,4 +1,4 @@
-const { OLSKRollupLocalizeExtractOLSKLocalizedConstants, OLSKRollupLocalizeExtractMatchingIdentifiers, OLSKRollupLocalizeReplaceInternationalizationToken } = require('./main.js');
+const OLSKRollupLocalize = require('./main.js');
 
 module.exports = function i18nPlugin( options = {} ) {
 	const filter = require('rollup-pluginutils').createFilter( options.include, options.exclude );
@@ -11,7 +11,7 @@ module.exports = function i18nPlugin( options = {} ) {
 	return {
 		name: 'i18n',
 
-		_OLSKRollupLocalizeReplaceInternationalizationToken: OLSKRollupLocalizeReplaceInternationalizationToken,
+		_OLSKRollupLocalizeReplaceInternationalizationToken: OLSKRollupLocalize.OLSKRollupLocalizeReplaceInternationalizationToken,
 
 		buildStart() {
 			if (!baseDirectory) {
@@ -37,7 +37,7 @@ module.exports = function i18nPlugin( options = {} ) {
 				return null;
 			}
 
-			// return OLSKRollupLocalizeReplaceInternationalizationToken({
+			// return OLSKRollupLocalize.OLSKRollupLocalizeReplaceInternationalizationToken({
 			// 	code: code,
 			// 	map: sourceMap || options.sourceMap || options.sourcemap,
 			// }, watchedFiles.reduce(function(coll, item) {
@@ -46,7 +46,7 @@ module.exports = function i18nPlugin( options = {} ) {
 			// 	return (coll[languageID] = Object.assign(coll[languageID] || {}, jsYAMLPackage.safeLoad(require('fs').readFileSync(item, 'utf8')))) && coll;
 			// }, {}));
 			
-			OLSKRollupLocalizeExtractOLSKLocalizedConstants(code).forEach(function (e) {
+			OLSKRollupLocalize.OLSKRollupLocalizeExtractOLSKLocalizedConstants(code).forEach(function (e) {
 				if (allConstants.includes(e)) {
 					return;
 				}
@@ -58,13 +58,13 @@ module.exports = function i18nPlugin( options = {} ) {
 		},
 
 		renderChunk(code, chunk, options) {
-			return OLSKRollupLocalizeReplaceInternationalizationToken({
+			return OLSKRollupLocalize.OLSKRollupLocalizeReplaceInternationalizationToken({
 				code: code,
 				map: sourceMap || options.sourceMap || options.sourcemap,
 			}, watchedFiles.reduce(function(coll, item) {
 				let languageID = require('OLSKInternational').OLSKInternationalLanguageID(require('path').basename(item));
 
-				return (coll[languageID] = Object.assign(coll[languageID] || {}, OLSKRollupLocalizeExtractMatchingIdentifiers(allConstants, require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8'))))) && coll;
+				return (coll[languageID] = Object.assign(coll[languageID] || {}, OLSKRollupLocalize.OLSKRollupLocalizeExtractMatchingIdentifiers(allConstants, require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8'))))) && coll;
 			}, {}));			
 		},
 		
