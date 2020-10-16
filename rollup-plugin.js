@@ -94,9 +94,10 @@ module.exports = function i18nPlugin( options = {} ) {
 			}, mod._ValueWatchedFiles.reduce(function(coll, item) {
 				const languageID = require('OLSKInternational').OLSKInternationalLanguageID(require('path').basename(item));
 				const data = require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8'));
+				const includeAllData = chunk.facadeModuleId && item.match(require('path').dirname(chunk.facadeModuleId));
 
 				return Object.assign(coll, {
-					[languageID]: Object.assign(coll[languageID] || {}, OLSKRollupLocalize.OLSKRollupLocalizeExtractMatchingIdentifiers(mod._ValueConstants, data)),
+					[languageID]: Object.assign(coll[languageID] || {}, OLSKRollupLocalize.OLSKRollupLocalizeExtractMatchingIdentifiers(mod._ValueConstants, data), includeAllData ? data : {}),
 				});
 			}, {}));			
 		},
