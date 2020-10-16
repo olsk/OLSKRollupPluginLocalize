@@ -17,32 +17,17 @@ module.exports = function i18nPlugin( options = {} ) {
 		// SETUP
 
 		SetupEverything() {
-			mod.SetupAlfa();
+			mod.SetupWatchedFiles();
 		},
 
-		SetupAlfa() {
-			
-		},
-
-		// LIFECYCLE
-
-		LifecycleModuleDidLoad() {
-			mod.SetupEverything();
-		},
-
-	};
-
-	mod.LifecycleModuleDidLoad();
-
-	return {
-		name: 'i18n',
-
-		_OLSKRollupLocalizeReplaceInternationalizationToken: OLSKRollupLocalize.OLSKRollupLocalizeReplaceInternationalizationToken,
-
-		buildStart() {
+		SetupWatchedFiles() {
 			if (!options.baseDirectory) {
       	throw new Error('missing options.baseDirectory');
 			}
+
+			if (!mod._DataWatchFunction) {
+				throw new Error('missing mod._DataWatchFunction');
+			};
 
 			(mod._ValueWatchedFiles = require('glob').sync('*i18n*.y*(a)ml', {
 			  matchBase: true,
@@ -51,7 +36,26 @@ module.exports = function i18nPlugin( options = {} ) {
 			  return require('OLSKInternational').OLSKInternationalIsTranslationFileBasename(require('path').basename(e));
 			}).map(function (e) {
 				return require('path').join(options.baseDirectory, e);
-			})).map(this.addWatchFile);
+			})).map(mod._DataWatchFunction);
+		},
+
+		// LIFECYCLE
+
+		LifecycleBuildDidStart() {
+			mod.SetupEverything();
+		},
+
+	};
+
+	return {
+		name: 'i18n',
+
+		_OLSKRollupLocalizeReplaceInternationalizationToken: OLSKRollupLocalize.OLSKRollupLocalizeReplaceInternationalizationToken,
+
+		buildStart() {
+			mod._DataWatchFunction = this.addWatchFile;
+
+			mod.LifecycleBuildDidStart();
 		},
 
 		transform(code, id) {
