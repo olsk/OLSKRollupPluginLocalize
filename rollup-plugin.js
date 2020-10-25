@@ -96,7 +96,6 @@ module.exports = function i18nPlugin( options = {} ) {
 				OLSKInternationalFileDelegateDirectory: mod._DataBaseDirectory,
 				OLSKInternationalFileDelegateGlobSync: require('glob').sync,
 				OLSKInternationalFileDelegateYAMLRead: require('js-yaml').safeLoad,
-				OLSKInternationalFileDelegateFileWrite: (function () {}),
 			}).reduce(function(coll, item) {
 				const languageID = require('OLSKInternational').OLSKInternationalLanguageID(require('path').basename(item));
 				const data = require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8'));
