@@ -13,6 +13,7 @@ module.exports = function i18nPlugin( options = {} ) {
 
 		_DataFilter: require('rollup-pluginutils').createFilter( options.include, options.exclude ),
 		_DataHasSourceMap: options.sourceMap !== false, // #purge
+		_DataBaseDirectory: options.baseDirectory,
 
 		// SETUP
 
@@ -91,7 +92,14 @@ module.exports = function i18nPlugin( options = {} ) {
 			return OLSKRollupLocalize.OLSKRollupLocalizeReplaceInternationalizationToken({
 				code: code,
 				map: mod._DataHasSourceMap || options.sourceMap || options.sourcemap,
-			}, mod._ValueWatchedFiles.reduce(function(coll, item) {
+			}, require('OLSKInternational')._OLSKInternationalPaths({
+				OLSKInternationalFileDelegateDirectory: mod._DataBaseDirectory,
+				OLSKInternationalFileDelegateGlobSync: require('glob').sync,
+				OLSKInternationalFileDelegatePathBasename: require('path').basename,
+				OLSKInternationalFileDelegateFileRead: require('fs').readFileSync,
+				OLSKInternationalFileDelegateYAMLRead: require('js-yaml').safeLoad,
+				OLSKInternationalFileDelegateFileWrite: (function () {}),
+			}).reduce(function(coll, item) {
 				const languageID = require('OLSKInternational').OLSKInternationalLanguageID(require('path').basename(item));
 				const data = require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8'));
 				const includeAllData = chunk.facadeModuleId && item.match(require('path').dirname(chunk.facadeModuleId));
