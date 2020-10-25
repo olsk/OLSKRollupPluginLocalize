@@ -52,11 +52,11 @@ module.exports = function i18nPlugin( options = {} ) {
 
 		_OLSKRollupLocalizeReplaceInternationalizationToken: OLSKRollupLocalize.OLSKRollupLocalizeReplaceInternationalizationToken,
 
-		buildStart() {
-			mod._DataWatchFunction = this.addWatchFile;
+		// buildStart() {
+		// 	mod._DataWatchFunction = this.addWatchFile;
 
-			mod.LifecycleBuildDidStart();
-		},
+		// 	mod.LifecycleBuildDidStart();
+		// },
 
 		transform(code, id) {
 			// if (id.match('node_modules')) {
