@@ -95,7 +95,6 @@ module.exports = function i18nPlugin( options = {} ) {
 			}, require('OLSKInternational')._OLSKInternationalPaths({
 				OLSKInternationalFileDelegateDirectory: mod._DataBaseDirectory,
 				OLSKInternationalFileDelegateGlobSync: require('glob').sync,
-				OLSKInternationalFileDelegatePathBasename: require('path').basename,
 				OLSKInternationalFileDelegateFileRead: require('fs').readFileSync,
 				OLSKInternationalFileDelegateYAMLRead: require('js-yaml').safeLoad,
 				OLSKInternationalFileDelegateFileWrite: (function () {}),
