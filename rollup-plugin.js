@@ -93,7 +93,6 @@ module.exports = function i18nPlugin( options = {} ) {
 				code: code,
 				map: mod._DataHasSourceMap || options.sourceMap || options.sourcemap,
 			}, require('OLSKInternational')._OLSKInternationalPaths({
-				OLSKInternationalFileDelegateYAMLRead: require('js-yaml').safeLoad,
 			}, mod._DataBaseDirectory).reduce(function(coll, item) {
 				const languageID = require('OLSKInternational').OLSKInternationalLanguageID(require('path').basename(item));
 				const data = require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8'));
