@@ -92,8 +92,7 @@ module.exports = function i18nPlugin( options = {} ) {
 			return OLSKRollupLocalize.OLSKRollupLocalizeReplaceInternationalizationToken({
 				code: code,
 				map: mod._DataHasSourceMap || options.sourceMap || options.sourcemap,
-			}, require('OLSKInternational')._OLSKInternationalPaths({
-			}, mod._DataBaseDirectory).reduce(function(coll, item) {
+			}, require('OLSKInternational')._OLSKInternationalPaths(mod._DataBaseDirectory).reduce(function(coll, item) {
 				const languageID = require('OLSKInternational').OLSKInternationalLanguageID(require('path').basename(item));
 				const data = require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8'));
 				const includeAllData = chunk.facadeModuleId && item.match(require('path').dirname(chunk.facadeModuleId));
