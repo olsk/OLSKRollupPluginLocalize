@@ -44,7 +44,7 @@ module.exports = function i18nPlugin( options = {} ) {
 			}, require('OLSKInternational')._OLSKInternationalPaths(mod._DataBaseDirectory).reduce(function(coll, item) {
 				const languageID = require('OLSKInternational').OLSKInternationalLanguageID(require('path').basename(item));
 				const data = require('js-yaml').load(require('fs').readFileSync(item, 'utf8'));
-				const includeAllData = chunk.facadeModuleId && item.match(require('path').dirname(chunk.facadeModuleId));
+				const includeAllData = true || chunk.facadeModuleId && item.match(require('path').dirname(chunk.facadeModuleId));
 
 				return Object.assign(coll, {
 					[languageID]: Object.assign(coll[languageID] || {}, OLSKRollupLocalize.OLSKRollupLocalizeExtractMatchingIdentifiers(mod._ValueConstants, data), includeAllData ? data : {}),
