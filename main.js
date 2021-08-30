@@ -64,7 +64,7 @@ const mod = {
 		(function replaceToken() {
 			const endIndex = startIndex + OLSKRollupLocalizeInternationalizationToken.length;
 
-			magicString.overwrite(startIndex, endIndex, `JSON.parse(\`${ JSON.stringify(param2).replace(/`/g, '\\\`').replace(/\\n/g, '\\\\n').replace(/\\r/g, '\\\\r') }\`)`);
+			magicString.overwrite(startIndex, endIndex, JSON.stringify(param2));
 
 			startIndex = param1.code.slice(endIndex).indexOf(OLSKRollupLocalizeInternationalizationToken);
 
