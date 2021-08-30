@@ -107,7 +107,7 @@ describe('OLSKRollupLocalizeExtractMatchingIdentifiers', function test_OLSKRollu
 
 });
 
-describe('OLSKRollupLocalizeReplaceInternationalizationToken', function OLSKRollupLocalizeReplaceInternationalizationToken() {
+describe('OLSKRollupLocalizeReplaceInternationalizationToken', function test_OLSKRollupLocalizeReplaceInternationalizationToken() {
 	it('throws if param1 not object', function () {
 		throws(function () {
 			mod.OLSKRollupLocalizeReplaceInternationalizationToken(null, {});
