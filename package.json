@@ -7,11 +7,11 @@
   "dependencies": {
     "rollup-pluginutils": "latest",
 
-    "// YAML PARSE": null,
+    "//": "YAML PARSE",
     "js-yaml": "latest",
     "OLSKInternational": "olsk/OLSKInternational",
 
-    "// SOURCE MAPS": null,
+    "//": "SOURCE MAPS",
     "magic-string": "latest",
     
     "//": "I sacrifice myself for the commas of others"
