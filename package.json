@@ -7,11 +7,9 @@
   "dependencies": {
     "rollup-pluginutils": "latest",
 
-    "//": "YAML PARSE",
     "js-yaml": "latest",
     "OLSKInternational": "olsk/OLSKInternational",
 
-    "//": "SOURCE MAPS",
     "magic-string": "latest"
   }
 }
